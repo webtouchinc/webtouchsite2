@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Expert Portfolio Page</title>
+    <style>
+        
+        body, h1, h2, h3, p, ul, li, a {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            background-color: #f7e7e7; 
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        
+        header {
+            background: linear-gradient(135deg, #FF6F61, #FFB4A2); /* Dynamic colors similar to red */
+            padding: 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            text-transform: uppercase;
+            animation: fadeInLeft 1s ease-in-out;
+        }
+
+        .menu-toggle {
+            font-size: 24px;
+            cursor: pointer;
+            display: none;
+            color: #fff;
+            animation: fadeInRight 1s ease-in-out;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ffd700; /* Gold color on hover */
+        }
+
+        
+        .sliding-menu {
+            position: fixed;
+            top: 0;
+            right: -250px;
+            width: 250px;
+            height: 100%;
+            background: #FF6F61;
+            transition: 0.3s ease;
+            padding-top: 60px;
+            z-index: 999;
+        }
+
+        .sliding-menu ul {
+            display: block;
+            text-align: center;
+        }
+
+        .sliding-menu ul li {
+            margin: 20px 0;
+        }
+
+        .sliding-menu ul li a {
+            color: #fff;
+            font-size: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sliding-menu ul li a:hover {
+            background-color: #FFB4A2; /* Change background color on hover */
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .sliding-menu.open {
+            right: 0;
+        }
+
+        
+        footer {
+            background: linear-gradient(135deg, #FF6F61, #FFB4A2);
+            color: #fff;
+            text-align: center;
+            padding: 10px 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        /* Main content styles */
+        .container {
+            padding-top: 120px; /* Spacing between header and body */
+            padding-bottom: 80px; /* Spacing between body and footer */
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section h2 {
+            font-size: 28px;
+            color: #FF6F61;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        .section h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: #FF6F61;
+            margin: 10px auto;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        .content-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .content-item img {
+            width: 300px;
+            height: auto;
+            border-radius: 10px;
+            margin-right: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .content-item img:hover {
+            transform: scale(1.05);
+        }
+
+        .content-item:nth-child(even) img {
+            order: 2;
+            margin-right: 0;
+            margin-left: 20px;
+        }
+
+        .content-item p {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            font-size: 18px;
+            line-height: 1.6;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        
+        .skills, .contact {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        .skills ul, .contact form {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .skills ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skills ul li {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-size: 18px;
+            position: relative;
+        }
+
+        .skills ul li::before {
+            content: '•';
+            color: #FF6F61;
+            font-size: 24px;
+            position: absolute;
+            left: -25px;
+            top: 5px;
+        }
+
+        .contact form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            animation: slideIn 1s ease-in-out;
+        }
+
+        .contact form input, .contact form textarea, .contact form button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .contact form button {
+            background-color: #FF6F61;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact form button:hover {
+            background-color: #FFB4A2;
+        }
+
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .sliding-menu ul li a {
+                font-size: 18px;
+            }
+
+            .content-item {
+                flex-direction: column;
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            .content-item img {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .content-item:nth-child(even) img {
+                order: 1;
+                margin-left: 0;
+            }
+
+            .content-item p {
+                font-size: 16px;
+            }
+
+            .skills, .contact {
+                flex-direction: column;
+            }
+        }
+
+       
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">My Portfolio</div>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <nav>
+        <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Portfolio</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="sliding-menu" id="menu">
+    <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Portfolio</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</div>
+
+<div class="container">
+    <section class="section about">
+        <h2>About Me</h2>
+        <div class="content-item">
+            <img src="https://via.placeholder.com/300" alt="About Image">
+            <p>Welcome to My Portfolio
+Hi, I’m [Your Name], a passionate photographer with a keen eye for detail and a love for capturing the essence of moments. With years of experience in various photography styles, I specialize in [mention your specialties, e.g., portrait photography, event photography, product photography]. My goal is to turn your vision into stunning visual narratives that resonate and captivate.</p>
+        </div>
+    </section>
+
+    <section class="section services">
+        <h2>My Services</h2>
+        <div class="content-item">
+            <img src="https://via.placeholder.com/300" alt="Services Image">
+            <p>What I Offer:
+
+Portrait Photography: From professional headshots to personal portraits, I create images that capture personality and emotion.
+Event Photography: Whether it's a wedding, corporate event, or private celebration, I ensure every significant moment is beautifully documented.
+Product Photography: Highlight your products with high-quality images that enhance their appeal and help drive sales.
+Custom Projects: Have a unique idea or project? Let’s collaborate to bring your creative vision to life.</p>
+        </div>
+    </section>
+
+    <section class="section portfolio">
+        <h2>Portfolio</h2>
+        <div class="content-item">
+            <img src="https://via.placeholder.com/300" alt="Portfolio Image">
+            <p>Why Choose Me?
+
+Experience and Expertise: With a background in [mention any relevant experience, e.g., "commercial photography" or "freelance projects"], I bring both technical skill and creative insight to every shoot.
+Client-Centric Approach: I prioritize your needs and work closely with you to ensure that the final images exceed your expectations.
+Quality Results: My commitment to quality is reflected in every photograph, utilizing the latest equipment and techniques to deliver exceptional results.</p>
+        </div>
+    </section>
+
+    <section class="section skills">
+        <h2>Skills</h2>
+        <ul>
+            <li>3D Picture design</li>
+            <li>UI/UX Design</li>
+            <li>Graphic Design</li>
+            <li>Expert Photography</li>
+        </ul>
+    </section>
+
+    <section class="section contact">
+        <h2>Contact Me</h2>
+        <form>
+            <input type="text" placeholder="Name" required>
+            <input type="email" placeholder="Email" required>
+            <textarea placeholder="Message" rows="5" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </section>
+</div>
+
+<footer>
+    <p>&copy; 2024 . All Rights Reserved.</p>
+</footer>
+
+<script>
+    function toggleMenu() {
+        document.getElementById('menu').classList.toggle('open');
+    }
+
+    window.addEventListener('scroll', function() {
+        var scrollPos = window.scrollY;
+        var header = document.querySelector('header');
+        var contentItems = document.querySelectorAll('.content-item');
+
+        if (scrollPos > 100) {
+            header.style.backgroundColor = '#FFB4A2'; 
+        } else {
+            header.style.backgroundColor = 'transparent';
+        }
+
+        contentItems.forEach(function(item) {
+            if (scrollPos > item.offsetTop - window.innerHeight + 100) {
+                item.style.opacity = 1;
+                item.style.transform = 'translateY(0)';
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
